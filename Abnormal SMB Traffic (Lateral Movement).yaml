@@ -1,0 +1,23 @@
+title: Abnormal SMB Traffic (Lateral Movement)
+id: 9a40e6fa-8c9d-44f6-92ca-cc3722857a2f
+description: Detects abnormal SMB traffic patterns that may indicate lateral movement within the network.
+status: stable
+author: Rajshekar Vijay
+logsource:
+  category: network_traffic
+  product: windows
+detection:
+  selection:
+    Protocol: SMB
+    Action: connect
+    DestinationPort: 445
+  condition: selection | count(>10) within 1m
+fields:
+  - SourceIP
+  - DestinationIP
+falsepositives:
+  - Legitimate network traffic from administrators
+level: high
+tags:
+  - attack.lateral_movement
+  - attack.t1075

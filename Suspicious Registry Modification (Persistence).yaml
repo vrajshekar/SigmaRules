@@ -1,0 +1,23 @@
+title: Suspicious Registry Modification (Persistence)
+id: b1cb6d5a-c61d-4c3c-855d-9338db71f1d1
+description: Detects modifications to the Windows registry that could indicate the establishment of persistence mechanisms.
+status: stable
+author: Rajshekar Vijay
+logsource:
+  category: registry
+  product: windows
+detection:
+  selection:
+    TargetObject|contains:
+      - 'HKCU\Software\Microsoft\Windows\CurrentVersion\Run'
+      - 'HKLM\Software\Microsoft\Windows\CurrentVersion\Run'
+  condition: selection
+fields:
+  - TargetObject
+  - ValueData
+falsepositives:
+  - Legitimate administrative changes
+level: high
+tags:
+  - attack.persistence
+  - attack.t1547

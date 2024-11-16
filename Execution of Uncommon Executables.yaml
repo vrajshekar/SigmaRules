@@ -1,0 +1,27 @@
+title: Execution of Uncommon Executables
+id: f59393b9-b8f4-4b4d-b4f6-88b309a6e7f6
+description: Detects execution of uncommon executable files that might be indicative of malicious activity or unapproved software.
+status: stable
+author: Rajshekar Vijay
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith:
+      - '.exe'
+      - '.bat'
+    CommandLine|notcontains:
+      - 'C:\Windows\System32'
+      - 'C:\Program Files'
+      - 'C:\Windows\Temp'
+  condition: selection
+fields:
+  - Image
+  - CommandLine
+falsepositives:
+  - Legitimate software installations
+level: medium
+tags:
+  - attack.execution
+  - attack.t1203

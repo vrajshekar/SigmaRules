@@ -1,0 +1,20 @@
+title: Execution of Suspicious Encoded Commands  
+id: f43d5a2a-e3b2-4c8c-9b5f-9f312e5b0b2c  
+description: Detects encoded commands that might be used to evade detection.  
+status: experimental  
+author: Rajshekar Vijay
+logsource:  
+  category: process_creation  
+  product: windows  
+detection:  
+  selection:  
+    CommandLine|regex: '(?i)-e.*[a-zA-Z0-9+/]{30,}={0,2}'  
+  condition: selection  
+fields:  
+  - CommandLine  
+falsepositives:  
+  - Legitimate encoded commands  
+level: high  
+tags:  
+  - attack.evasion  
+  - attack.t1140  

@@ -1,0 +1,23 @@
+title: Unusual User Account Creation  
+id: 1f6b3725-b5d8-4fca-83d2-c7d2d43c9f92  
+description: Detects unexpected creation of user accounts on Linux systems.  
+status: stable  
+author: Rajshekar Vijay 
+logsource:  
+  category: process_creation  
+  product: linux  
+detection:  
+  selection:  
+    CommandLine|contains:  
+      - 'useradd'  
+      - 'adduser'  
+  condition: selection  
+fields:  
+  - CommandLine  
+  - User  
+falsepositives:  
+  - Legitimate administrative account creation  
+level: medium  
+tags:  
+  - attack.persistence  
+  - attack.t1136  

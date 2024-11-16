@@ -1,0 +1,22 @@
+title: High-Frequency Failed Logins  
+id: b3fa9d5a-8099-43a1-96d4-f19b9d5b16c5  
+description: Detects multiple failed login attempts in a short time frame, indicating a brute-force attack.  
+status: stable  
+author: Your Name  
+logsource:  
+  category: authentication  
+  product: windows  
+detection:  
+  selection:  
+    EventID: 4625  
+  timeframe: 1m  
+  condition: selection | count(>5)  
+fields:  
+  - TargetUserName  
+  - IpAddress  
+falsepositives:  
+  - Users mistyping passwords  
+level: high  
+tags:  
+  - attack.credential_access  
+  - attack.t1110  

@@ -1,0 +1,26 @@
+
+title: Suspicious PowerShell Command Execution
+id: ae5a4f98-4b2d-4df9-b43d-5a8b6e7a67b7
+description: Detects PowerShell commands that may indicate malicious behavior, such as obfuscation or downloading scripts.
+status: stable
+author: Cybersecurity Expert
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith:
+      - '\powershell.exe'
+    CommandLine|contains:
+      - '-enc'
+      - 'Invoke-WebRequest'
+      - 'IEX'
+  condition: selection
+fields:
+  - CommandLine
+falsepositives:
+  - Legitimate administrative activity
+level: high
+tags:
+  - attack.execution
+  - attack.t1059.001

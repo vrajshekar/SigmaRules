@@ -1,0 +1,26 @@
+title: YARA Rule Download via Curl or Wget  
+id: d2cf42d0-717f-4d7e-b9fc-45b341c6ff97  
+description: Detects suspicious file downloads using curl or wget that may indicate malicious payload fetching.  
+status: stable  
+author: Rajshekar Vijay
+logsource:  
+  category: process_creation  
+  product: linux  
+detection:  
+  selection:  
+    CommandLine|contains:  
+      - 'curl'  
+      - 'wget'  
+    CommandLine|endswith:  
+      - '.yara'  
+      - '.yar'  
+  condition: selection  
+fields:  
+  - CommandLine  
+  - User  
+falsepositives:  
+  - Legitimate file downloads by administrators  
+level: medium  
+tags:  
+  - attack.command_and_control  
+  - attack.t1105  
